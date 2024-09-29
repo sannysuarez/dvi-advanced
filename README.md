@@ -7,7 +7,7 @@ DVI is a data visualization web community, designed to unlock the power of rich 
 ![screenshot](https://github.com/sannysuarez/DVI/blob/main/screenshots/Screenshot%202024-03-06%20123531.png)
 ![screenshot](https://github.com/sannysuarez/DVI/blob/main/screenshots/Screenshot%202024-03-06%20123737.png)
 
-## The project directories
+## Project directories
 - `dvi/` The package containing the application code and files.
 
 
