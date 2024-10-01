@@ -1,9 +1,8 @@
 import functools
-from crypt import methods
-
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for )
 from werkzeug.security import check_password_hash, generate_password_hash
 from dvi.db import get_db
+from dvi.utils import get_countries
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -24,7 +23,7 @@ def register():
             error = 'Names are required!'
         elif not gender:
             error = 'Gender required!'
-        elif not doc:
+        elif not dob:
             error = 'D.O.B required!'
         elif not region:
             error = 'Region required!'
@@ -37,7 +36,9 @@ def register():
 
         if error is None:
             try:
-                db.execute("INSERT INTO user (full_name, gender, dob, region, email, username, password) VALUES(?, ?, ?, ?, ?, ?, ?)", (full_name, gender, dob, region, email, username, generate_password_hash(password)),)
+                db.execute("INSERT INTO user "
+                           "(full_name, gender, dob, region, email, username, password) VALUES(?, ?, ?, ?, ?, ?, ?)",
+                            (full_name, gender, dob, region, email, username, generate_password_hash(password)),)
                 db.commit()
             except db.IntegrityError:
                 error = f"{email} is already registered."
@@ -46,14 +47,14 @@ def register():
                 flash(success)
                 return redirect(url_for("auth.login"))
         flash(error)
-    return render_template('auth/register.html')
+    countries = get_countries()
+    return render_template('auth/register.html', countries=countries)
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':
         identifier = request.form['identifier'] # Can be Username or Email
         password = request.form['password']
-
         db = get_db()
         error = None
         # Check if the identifier is an Email or Username
@@ -78,7 +79,7 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = get_db().execute('SELECT * FROM user WHERE id = ?', (user_id,)).fetchone
+        g.user = get_db().execute('SELECT * FROM user WHERE id = ?', (user_id,)).fetchone()
 
 
 # remove the user ID from the session. then load_logged_in_user won't load a user on subsequent requests.

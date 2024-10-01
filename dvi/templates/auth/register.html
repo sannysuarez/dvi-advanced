@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block header %}
+ <h1>{% block title %}Register{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+ <form method="post">
+     <!-- For full names -->
+     <label for="full_name">Names</label>
+     <input type="text" name="full_name" id="full_name" required>
+     <!-- For Gender selection -->
+     <label for="gender">Gender</label>
+     <select id="gender" name="gender" required>
+         <option value="" disabled selected hidden>Select</option>
+         <option value="Male">Male</option>
+         <option value="Female">Female</option>
+     </select>
+     <!-- For D.O.B selection -->
+     <label for="dob">D.O.B</label>
+     <input type="date" name="dob" id="dob" required>
+     <!-- For region selection -->
+     <label for="region">Region</label>
+     <select id="region" name="region" required>
+         <option value="" disabled selected hidden>Select</option>
+         {% for code, country in countries %}
+            <option value="{{ country }}">{{ country }}</option>
+         {% endfor %}
+     </select>
+     <!-- For Email -->
+     <label for="email">Email</label>
+     <input type="email" name="email" id="email" required>
+     <!-- For UserName -->
+     <label for="username">User-Name</label>
+     <input name="username" id="username" required>
+     <!-- For password -->
+     <label for="password">password</label>
+     <input type="password" name="password" id="password" required>
+     <!-- For submit button -->
+     <input type="submit" value="register">
+ </form>
+{% endblock %}

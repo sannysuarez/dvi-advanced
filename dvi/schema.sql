@@ -6,6 +6,7 @@ CREATE TABLE user (
   full_name TEXT NOT NULL,
   gender TEXT CHECK(gender IN ('Male', 'Female')),
   region TEXT NOT NULL,
+  dob DATE NOT NULL,
   register TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   email TEXT UNIQUE NOT NULL,
   username TEXT UNIQUE NOT NULL,

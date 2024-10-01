@@ -4,7 +4,7 @@ from flask import Flask
 def create_app(test_config=None):
     # create and configure the App
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping( SECRET_key='dev', DATABASE=os.path.join(app.instance_path, 'dvi.sqlite'),)
+    app.config.from_mapping( SECRET_KEY='dev', DATABASE=os.path.join(app.instance_path, 'dvi.sqlite'),)
 
     if test_config is None:
         # Load the instance config, if it exists, when not testing
