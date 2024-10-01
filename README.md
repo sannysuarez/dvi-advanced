@@ -11,7 +11,7 @@ DVI is a data visualization web community, designed to unlock the power of rich 
 - `dvi/` The package containing the application code and files.
 
 
-## Getting started (still on progress)
+## Getting started 
 1. Clone the Repository:
 2. Install Dependencies:
 3. Run the Application:
