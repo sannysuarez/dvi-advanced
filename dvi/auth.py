@@ -31,6 +31,8 @@ def register():
             error = 'Email required!'
         elif not username:
             error = 'Username required!'
+        elif len(password) < 8:
+            error = 'password must be greater or equal to 8 chracters!'
         elif not password:
             error = 'Password required!'
 
