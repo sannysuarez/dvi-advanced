@@ -4,9 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %} - DVI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/tab_logo.png') }}" type="image/png">
 </head>
 <body>
-  <nav>
+  <nav class="left-col">
       <h1>DVI</h1>
       <ul>
           <li>Home</li>

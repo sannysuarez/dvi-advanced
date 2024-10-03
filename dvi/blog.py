@@ -15,13 +15,14 @@ def index():
     return render_template('blog/index.html', posts=posts)
 
 @bp.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
     if request.method == 'POST':
         body = request.form['body']
 
         db = get_db()
         db.execute(
-            'INSERT INTO post ( body, author_id) VALUES (?, ?)', (body, g.user[id])
+            'INSERT INTO post ( body, author_id) VALUES (?, ?)', (body, g.user['id'])
         )
         db.commit()
         return redirect(url_for('blog.index'))
@@ -62,3 +63,11 @@ def update(id):
         return redirect(url_for('blog.index'))
     return render_template('blog/update.html', post=post)
 
+@bp.route('/<int:id>/delete', methods=('POST',))
+@login_required
+def delete(id):
+    get_post(id)
+    db = get_db()
+    db.execute('DELETE FROM post WHERE id = ?', (id,))
+    db.commit()
+    return redirect(url_for('blog.index'))
