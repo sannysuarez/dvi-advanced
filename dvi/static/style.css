@@ -3,5 +3,89 @@
    background-color: #ffffff;
    padding: 0;
    margin: 0;
-   overflow: hidden;
+   overflow-x: hidden;
+   }
+
+ .left-col{
+   position: fixed;
+   left: 0;
+   top: 0;
+   height: 100vh;
+   width: 23%;
+   z-index: 1;
+   background-color:  #150138;
+   }
+ .left-col .img-con{
+   text-align: center;
+   margin-top: 1rem;
+   }
+
+ .left-col .img-logo{
+   width: 200px;
+   position: block;
+   margin-left: auto;
+   margin-right: auto;
+   }
+
+ .left-col a{
+   text-decoration: none;
+   color: #ffffff;
+   }
+
+ .left-col a:hover{
+   color: #00FF00;
+   }
+
+ .left-col ul{
+   list-style: none;
+   margin-bottom: 25px;
+   }
+
+ .left-col ul li{
+   margin-bottom: 15px;
+   }
+
+ .left-col ul li a{
+   font-size: 1.5rem;
+   font-weight: bolder;
+   letter-spacing: 0.1rem;
+   }
+
+ nav .nav-bottom{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   }
+
+ nav .nav-bottom a{
+   text-align: center;
+   font-size: 1.5rem;
+   font-weight: bold;
+   letter-spacing: 0.1rem;
+   margin: 0.3rem;
+   }
+
+ nav .sign-in, .register{
+   width: 80%;
+   border: 2px solid #150138;
+   border-radius: 7px;
+   padding: 0.5rem;
+   background-color: rgba(0, 0, 0, 0.25);
+   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Horizontal, vertical, blur, and color */
+   }
+
+ .right-col{
+   position: fixed;
+   right: 0;
+   top: 0;
+   height: 100vh;
+   width: 23%;
+   background-color: #f1f1f1;
+   s}
+
+ .content-col{
+   margin-left: 23%;
+   margin-right: 23%;
+   padding: 1rem;
+   background-color: #ffffff;
    }
