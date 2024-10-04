@@ -50,7 +50,7 @@ def register():
                 return redirect(url_for("auth.login"))
         flash(error)
     countries = get_countries()
-    return render_template('auth/register.html', countries=countries)
+    return render_template('auth/register.html', page_name='register', countries=countries)
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
@@ -72,7 +72,7 @@ def login():
             session['user_id'] = user['id']
             return redirect(url_for('index'))
         flash(error)
-    return render_template('auth/login.html')
+    return render_template('auth/login.html', page_name='login')
 
 @bp.before_app_request
 def load_logged_in_user():

@@ -21,10 +21,8 @@
    }
 
  .left-col .img-logo{
-   width: 200px;
+   width: 170px;
    position: block;
-   margin-left: auto;
-   margin-right: auto;
    }
 
  .left-col a{
@@ -42,13 +40,20 @@
    }
 
  .left-col ul li{
-   margin-bottom: 15px;
+   margin-bottom: 0.5rem;
+   padding: 0.5rem;
+   }
+
+ .left-col ul li:hover{
+   background-color: rgba(0, 0, 0, 0.25);
+   border-radius: 6px;
    }
 
  .left-col ul li a{
    font-size: 1.5rem;
    font-weight: bolder;
    letter-spacing: 0.1rem;
+   display: block;
    }
 
  nav .nav-bottom{
@@ -89,3 +94,9 @@
    padding: 1rem;
    background-color: #ffffff;
    }
+
+ h1, h2, form{
+   text-align: center;
+   display: flex;
+   flex-direction: column;}
+ /* LOGIN */

@@ -35,7 +35,7 @@
 
   </div>
 
-  <section class="content-col">
+  <section class="content-col" {% if page_name=='login' or page_name=='register' %} style="background-color: #f1f1f1; height: 100vh;" {% endif %}>
       <header>
           {% block header %}{% endblock %}
       </header>
