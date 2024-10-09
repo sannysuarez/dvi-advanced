@@ -2,10 +2,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>{% block title %}{% endblock %} - DVI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script> <!-- JavaScript in head -->
+
+     <!-- Conditionally include login.css for the login page -->
+    {% if page_name == 'login' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    {% endif %}
+    {% if page_name == 'register' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+    {% endif %}
     <link rel="icon" href="{{ url_for('static', filename='img/tab_logo.png') }}" type="image/png">
 <body>
   <nav class="left-col">
@@ -25,8 +35,8 @@
              <a href="{{ url_for('auth.logout') }}">Log out</a>
       {% else %}
           <div class="nav-bottom">
-              <a class="sign-in" href="{{ url_for('auth.login') }}">Log In</a>
-              <a class="register" href="{{ url_for('auth.register') }}">Register</a>
+              <a class="sign-in" href="{{ url_for('auth.login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Log In</a>
+              <a class="register" href="{{ url_for('auth.register') }}"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
           </div>
       {% endif %}
   </nav>
@@ -35,13 +45,17 @@
 
   </div>
 
-  <section class="content-col" {% if page_name=='login' or page_name=='register' %} style="background-color: #f1f1f1; height: 100vh;" {% endif %}>
+  <section class="content-col">
       <header>
           {% block header %}{% endblock %}
       </header>
-      {% for message in get_flashed_messages() %}
-         <div class="flash">{{ message }}</div>
-      {% endfor %}
+      {% with messages = get_flashed_messages(with_categories=True) %}
+         {% if messages %}
+            {% for category, message in messages %}
+              <div class="{{ category }}">{{ message }}</div>
+            {% endfor %}
+         {% endif %}
+      {% endwith %}
 
       {% block content%}{% endblock %}
   </section>

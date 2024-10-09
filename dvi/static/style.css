@@ -15,6 +15,7 @@
    z-index: 1;
    background-color:  #150138;
    }
+   
  .left-col .img-con{
    text-align: center;
    margin-top: 1rem;
@@ -41,7 +42,7 @@
 
  .left-col ul li{
    margin-bottom: 0.5rem;
-   padding: 0.5rem;
+   padding:0.5rem;
    }
 
  .left-col ul li:hover{
@@ -53,13 +54,19 @@
    font-size: 1.5rem;
    font-weight: bolder;
    letter-spacing: 0.1rem;
-   display: block;
    }
 
  nav .nav-bottom{
    display: flex;
    flex-direction: column;
    align-items: center;
+   }
+
+ nav .nav-bottom .fa{
+   color: #00BB00;
+   float: left;
+   margin-top: auto;
+   margin-bottom: auto;
    }
 
  nav .nav-bottom a{
@@ -95,8 +102,9 @@
    background-color: #ffffff;
    }
 
- h1, h2, form{
-   text-align: center;
-   display: flex;
-   flex-direction: column;}
+
+
+
+
+
  /* LOGIN */

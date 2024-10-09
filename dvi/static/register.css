@@ -1,0 +1,72 @@
+
+ .content-col{
+   background-color: #ffffff;
+   margin-top: 0.5rem;
+   height: 100vh;
+   display: flex;
+   flex-direction: column;
+   text-align: center;
+   }
+
+ input, select{
+   width: 60%;
+   height: 3rem;
+   margin-bottom: 2%;
+   border-radius: 7px;
+   border: none;
+   padding-left: 1rem;
+   font-size: 0.9rem;
+   background-color: #f1f1f1;
+   }
+
+ input[type'date']{
+   padding-left: 0.1rem;
+   }
+
+ input[type='submit']{
+   background-color: #150138;
+   color: #ffffff;
+   font-size: 1.5rem;
+   font-weight: bold;
+   cursor: pointer;
+   }
+
+ input[type='submit']:hover{
+   color: #00ff00;
+   transition: 0.3s ease;
+   }
+
+ input::placeholder{
+   font-size: 0.9rem;
+   padding-left: 0.5rem;
+   color: grey;
+   }
+
+ input:focus{
+   border-color: #66afe9;
+   outline: none;
+   box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+   }
+
+ select{
+   font-size: 0.9rem;
+   padding-left: 0.5rem;
+   }
+
+ label{
+   font-size: 1rem;
+   font-weight: bold;
+   letter-spacing: 0.1rem;
+   float: left;
+   padding-left: 20%;
+   }
+
+ sub{ float: left; }
+
+ .flash, .error{
+   color: red;
+   background-color: #f8d7da;
+   padding: 0.1rem;
+   border: 1px solid red;
+   }
+

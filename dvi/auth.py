@@ -1,5 +1,5 @@
 import functools
-from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for )
+from flask import (Blueprint, flash, get_flashed_messages, g, redirect, render_template, request, session, url_for )
 from werkzeug.security import check_password_hash, generate_password_hash
 from dvi.db import get_db
 from dvi.utils import get_countries
@@ -13,11 +13,12 @@ def register():
         gender = request.form['gender']
         dob = request.form['dob']
         region = request.form['region']
-        email = request.form['email']
+        email = request.form['email'].lower()
         username = request.form['username']
         password = request.form['password']
         db = get_db()
         error = None
+        success = None
 
         if not full_name:
             error = 'Names are required!'
@@ -45,10 +46,10 @@ def register():
             except db.IntegrityError:
                 error = f"{email} is already registered."
             else:
-                success = 'Registered successfully.'
-                flash(success)
-                return redirect(url_for("auth.login"))
-        flash(error)
+                success = 'Registered successfully. you can log in now'
+                flash(success, "success")
+                return redirect(url_for("auth.login", success=success))
+        flash(error, "error")
     countries = get_countries()
     return render_template('auth/register.html', page_name='register', countries=countries)
 
@@ -71,7 +72,7 @@ def login():
             session.clear()
             session['user_id'] = user['id']
             return redirect(url_for('index'))
-        flash(error)
+        flash(error, "error")
     return render_template('auth/login.html', page_name='login')
 
 @bp.before_app_request

@@ -1,0 +1,57 @@
+
+ .content-col{
+   background-color: #ffffff;
+   margin-top: 3rem;
+   height: 100vh;
+   display: flex;
+   flex-direction: column;
+   text-align: center;
+   }
+
+ input{
+   width: 60%;
+   height: 3rem;
+   margin: 15px;
+   border-radius: 7px;
+   border: none;
+   padding-left: 1rem;
+   font-size: 0.9rem;
+   background-color: #f1f1f1;
+   }
+
+ input[type='submit']{
+   background-color: #150138;
+   color: #ffffff;
+   font-size: 1.5rem;
+   font-weight: bold;
+   cursor: pointer;
+   }
+
+ input[type='submit']:hover{
+   color: #00ff00;
+   transition: 0.3s ease;
+   }
+
+ ::placeholder{
+   font-size: 1rem;
+   font-weight: bold;
+   padding-left: 0.5rem;
+   }
+
+ label, a{
+   font-size: 1.1rem;
+   }
+
+ .success{
+   color: green;
+   background-color: #d4edda;
+   padding: 0.1rem;
+   border: 1px solid green;
+   }
+
+ .error{
+   color: red;
+   background-color: #f8d7da;
+   padding: 0.1rem;
+   border: 1px solid red;
+   }

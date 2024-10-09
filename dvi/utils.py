@@ -1,3 +1,31 @@
+from datetime import datetime, timedelta
+
+
+def custom_humanize_time(dt):
+    now = datetime.now()
+    diff = now - dt
+
+    if diff < timedelta(seconds=60):
+        return "just now"
+    elif diff < timedelta(minutes=1):
+        seconds = diff.seconds
+        return f"{seconds}s"
+    elif diff < timedelta(hours=1):
+        minutes = diff.seconds // 60
+        return f"{minute}m"
+    elif diff < timedelta(days=1):
+        hours = diff.seconds // 3600
+        return f"{hours}h"
+    elif diff < timedelta(days=30):
+        days = diff.days
+        return f"{days}d"
+    elif diff < timedelta(days=365):
+        months = diff.days // 30
+        return f"{months}m"
+    else:
+        years = diff.days // 365
+        return f"{years}y"
+
 def get_countries():
     return [
         ("AF", "Afghanistan"),
@@ -195,3 +223,4 @@ def get_countries():
         ("ZM", "Zambia"),
         ("ZW", "Zimbabwe"),
     ]
+
