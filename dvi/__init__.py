@@ -29,5 +29,9 @@ def create_app(test_config=None):
     app.register_blueprint(blog.bp)
     app.add_url_rule('/', endpoint='index')
 
+    from . import user
+    app.register_blueprint(user.bp)
+    app.add_url_rule('/', endpoint='profile')
+
 
     return app

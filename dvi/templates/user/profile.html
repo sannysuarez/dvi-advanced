@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>This profile page is set</h1>
+<ul>
+    <li>{{ user['full_name'] }}</li>
+    <li>{{ user['username'] }}</li>
+    <li>{{ user['about_user'] }}</li>
+    <li>{{ user['region'] }}</li>
+    <li>{{ user['website_link'] }}</li>
+</ul>
+{% endblock %}
