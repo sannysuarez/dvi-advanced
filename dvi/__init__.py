@@ -6,7 +6,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping( SECRET_KEY='dev', DATABASE=os.path.join(app.instance_path, 'dvi.sqlite'),)
 
-    app.config["UPLOAD_EXTENSIONS"]=[".jpg", ".png"]
+    app.config["UPLOAD_EXTENSIONS"]=[".jpg", ".png", ".jpeg", ".png"]
     app.config["UPLOAD_PATH"]="dvi/static/img/profile_pic_uploads"
 
     if test_config is None:

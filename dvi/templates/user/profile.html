@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>This profile page is set</h1>
-{% if g.user and g.user['id'] == user['pic_path'] %}
-<img src="{{ url_for('static', filename='img/profile_pic_uploads/' ~ user['pic_path']) }}" alt="Profile picture" width="200">
-{% else %}
-<img src="{{ url_for('static', filename='img/profile_pic_uploads/avater.png') }}" alt="profile Avatar">
-{% endif %}
-<a href="{{ url_for('user.update') }}">Update</a>
+   {% if g.user and g.user['pic_path'] %}
+     <img class="img-profile" src="{{ url_for('static', filename='img/profile_pic_uploads/' ~ user['pic_path']) }}" alt="Profile picture">
+   {% else %}
+     <img class="img-profile" src="{{ url_for('static', filename='img/profile_pic_uploads/avatar.png') }}" alt="profile Avatar">
+   {% endif %}
+<a href="{{ url_for('user.profile_update') }}">Update</a>
 <ul>
     <li>{{ user['full_name'] }}</li>
     <li>{{ user['username'] }}</li>
     <li>{{ user['about_user'] }}</li>
     <li>{{ user['region'] }}</li>
-    <li>{{ user['website_link'] }}</li>
+    <li><a href="{{ user['website_link'] }}" target="_blank">{{ domain }}</a></li>
+    <li>Joined {{ user['register_month'] }}-{{ user['register_year'] }}</li>
 </ul>
 {% endblock %}

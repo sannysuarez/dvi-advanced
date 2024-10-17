@@ -5,11 +5,11 @@
 
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>{% block title %}{% endblock %} - DVI</title>
+    <title>{% block title %}{% endblock %} | DVI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script> <!-- JavaScript in head -->
 
-     <!-- Conditionally include login.css for the login page -->
+     <!-- Conditionally include login.css for the login page and register.css for the register page. -->
     {% if page_name == 'login' %}
         <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
     {% endif %}
@@ -30,9 +30,19 @@
           <li><a href="{{ url_for('user.profile') }}"><i class="fa fa-user" aria-hidden="true"></i> Profile </a></li>
           <li><a href="{{ url_for('blog.index') }}"><i class="fa fa-chevron-circle-down" aria-hidden="true"></i> More </a></li>
       </ul>
-      {% if g.user %}
-             <span>{{ g.user['username'] }}</span>
-             <a href="{{ url_for('auth.logout') }}">Log out</a>
+      {% if g.user  %}
+            <div class="user-nav-bottom">
+                {% if g.user and g.user['pic_path'] %}
+                      <img class="img-nav" src="{{ url_for('static', filename='img/profile_pic_uploads/' ~ g.user['pic_path']) }}" alt="user picture" >
+                {% else %}
+                      <img class="img-nav" src="{{ url_for('static', filename='img/profile_pic_uploads/avatar.png') }}" alt="user picture">
+                {% endif %}
+
+                <span>{{ g.user['full_name'] }}</span>
+                <span>{{ g.user['username'] }}</span>
+                <a href="{{ url_for('auth.logout') }}">Log out</a>
+
+            </div>
       {% else %}
           <div class="nav-bottom">
               <a class="sign-in" href="{{ url_for('auth.login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Log In</a>

@@ -56,6 +56,12 @@
    letter-spacing: 0.1rem;
    }
 
+ nav .user-nav-bottom .img-nav{
+   width: 50px;
+   height: 50px;
+   border-radius: 50%;
+   }
+
  nav .nav-bottom{
    display: flex;
    flex-direction: column;
@@ -102,6 +108,24 @@
    background-color: #ffffff;
    }
 
+  .img-profile, .img-update{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    }
+
+ .update-container input{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   }
+
+ .update-container input{
+   width: 50%;
+   height: 3rem;
+   margin-bottom: 1rem;
+   border-radius: 7px;
+   }
 
 
 
