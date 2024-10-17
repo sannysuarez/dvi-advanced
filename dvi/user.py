@@ -93,18 +93,19 @@ def remove_profile_pic():
     db = get_db()
 
     # get the current user's profile picture
-    current_pic_path = g.user['pic_path']
+    current_path = g.user['pic_path']
 
     # If the user has an existing profile picture, remove it.
-    if current_pic_path and current_pic_path != 'avatar.png': # because 'avatar.png' is the default picture
-        file_path = os.path.join(current_app.config['UPLOAD_PATH'], current_pic_path)
+    if current_path is not None:
+        file_path = os.path.join(current_app.config['UPLOAD_PATH'], current_path)
 
         # Check if the file exists before trying to remove it
         if os.path.exists(file_path):
             os.remove(file_path)
 
-    # Set the profile picture to none in the database
-    db.execute('UPDATE user SET pic_path = NULL WHERE id = ?', (g.user['id'],))
+
+    # Set the profile picture path in the database to None (the default avatar)
+    db.execute('UPDATE user SET pic_path = ? WHERE id = ?', (None, g.user['id'],))
     db.commit()
     return render_template('user/update.html')
 

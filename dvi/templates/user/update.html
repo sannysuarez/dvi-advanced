@@ -3,14 +3,16 @@
 {% block content %}
  <div class="update-container">
 
- <form method="post" enctype="multipart/form-data">
-
-      {% if g.user and g.user['pic_path'] %}
+      {% if g.user and g.user['pic_path']  %}
           <img class="img-update" src="{{ url_for('static', filename='img/profile_pic_uploads/' ~ g.user['pic_path']) }}" alt="Profile picture">
-
+                <form method="POST" action="{{ url_for('user.remove_profile_pic') }}" onsubmit="return confirm('Are you sure you want to remove your profile picture?');">
+                     <button type="submit" class="btn btn-danger">Remove Profile Picture</button>
+                </form>
              {% else %}
           <img class="img-update" src="{{ url_for('static', filename='img/profile_pic_uploads/avatar.png') }}" alt="profile Avatar">
      {% endif %}
+
+ <form method="post" enctype="multipart/form-data">
 
      <!-- File input for uploading a new profile picture -->
     <input type="file" name="pic_path" id="profile_pic" accept=".jpg, .png, .jpeg">
@@ -19,7 +21,7 @@
      <input type="text" name="full_name" id="full_name" value="{{ g.user['full_name'] }}" required>
      <input type="text" name="about_user" id="about_user" value="{{ request.form['about_user'] or g.user['about_user'] }}">
      <input type="url" name="website_link" id="website_link" value="{{ g.user['website_link'] }}">
-     <input type="submit" value="save">
+     <input type="submit" value="Save update">
  </form>
  </div>
 
