@@ -56,17 +56,56 @@
    letter-spacing: 0.1rem;
    }
 
- nav .user-nav-bottom .img-nav{
-   width: 50px;
-   height: 50px;
-   border-radius: 50%;
-   }
-
  nav .nav-bottom{
    display: flex;
    flex-direction: column;
    align-items: center;
    }
+
+ nav .nav-bottom .fa{
+   color: #00BB00;
+   float: left;
+   margin-top: auto;
+   margin-bottom: auto;
+   }
+
+ nav .nav-bottom a{
+   text-align: center;
+   font-size: 1.5rem;
+   font-weight: bold;
+   letter-spacing: 0.1rem;
+   margin: 0.3rem;
+   }
+
+ nav .user-nav-bottom .img-nav{
+   width: 50px;
+   height: 50px;
+   margin-left: 0.5rem;
+   border-radius: 50%;
+   }
+
+ nav .user-nav-bottom .names{
+   margin-left: 4rem;
+   margin-top: -15%;
+   color: #f1f1f1;
+   font-weight: bold;
+   }
+
+ nav .user-nav-bottom .username{
+   margin-left: 4rem;
+   color: grey
+   }
+
+ nav .user-nav-bottom .names:hover{
+   color: #00ff00;
+   padding: 2px;
+   }
+
+ nav .user-nav-bottom .username:hover{
+   color: #00ff00;
+   padding: 2px;
+   }
+
 
  nav .nav-bottom .fa{
    color: #00BB00;
@@ -92,6 +131,7 @@
    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Horizontal, vertical, blur, and color */
    }
 
+
  .right-col{
    position: fixed;
    right: 0;
@@ -104,15 +144,134 @@
  .content-col{
    margin-left: 23%;
    margin-right: 23%;
-   padding: 1rem;
    background-color: #ffffff;
    }
 
-  .img-profile, .img-update{
-    height: 150px;
-    width: 150px;
-    border-radius: 50%;
-    }
+ article header a{
+   text-decoration: none;
+   }
+
+ header .about{
+   padding-left: 0.1rem;
+   font-weight: bold;
+   letter-spacing: 0.09rem;
+   }
+
+ header .about a{
+   color: #000000;
+   }
+
+ header .about a:hover{
+   background-color: rgba(0, 0, 0, 0.25);
+   border-radius: 3px;
+   }
+
+ header .about-child{
+   color: grey;
+   }
+
+ article header .action{
+   float: right;
+   margin-right: 1.5rem;
+   }
+
+ header .user-header img{
+   width: 50px;
+   height: 50px;
+   border-radius: 50%;
+   margin-left: 5px;
+   }
+
+ header img.a{
+   vertical-align: top;
+   }
+
+ article .body{
+   padding-left: 3.8rem;
+   padding-right: 1rem;
+   margin-top: -4%;
+   }
+
+ .img-profile, .img-update{ /* profile picture */
+   height: 150px;
+   width: 150px;
+   border-radius: 50%;
+   }
+
+ .profile-container a{
+   text-decoration: none;
+   }
+
+ .profile-container .profile-bg{
+   width: 100%;
+   height: 250px;
+   }
+
+ .profile-container .img-profile{
+   margin-top: -15%;
+   margin-left: 2rem;
+   border: 4px solid #f1f1f1;
+   }
+
+ .profile-container .update-btn{
+   float: right;
+   }
+
+ .profile-container .update-btn:hover{
+   color: #000000;
+   }
+
+ .profile-container .update-btn{
+   font-size: 1.5rem;
+   font-weight: bolder;
+   padding: 0.5rem;
+   margin-right: 1rem;
+   border: 2px solid #000000;
+   border-radius: 0.5rem;
+   }
+
+ .profile-container .info{
+   margin-left: 1.5rem;
+   }
+
+ .profile-container .info{
+   display: flex;
+   flex-wrap: wrap;
+   gap: 10px; /* space between inline elements */
+   }
+
+ .profile-container .info .names,
+ .profile-container .info .username,
+ .profile-container .others{
+   display: inline-block; /* keep these inline */
+   }
+
+ .profile-container .about{
+   width: 100%; /* forces a line break for the about section */
+   margin: 15px 0; /* space between line breaks */
+   }
+
+ .profile-container .info .region, .weblink, .joined{
+   display: inline-block;
+   margin-right: 30px; /* space between inline elements */
+   }
+
+ /* additional styling for better spacing and appearance */
+ .profile-container .info .names{
+   font-weight: bold;
+   font-size: 1.5rem;
+   }
+
+ .profile-container .info .username{
+   color: gray;
+   font-weight: bold;
+   }
+
+ .profile-container .info .others{
+   font-size: 1em;
+   color: #555;
+   }
+
 
 
  .update-container input{

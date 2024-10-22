@@ -1,19 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-   {% if g.user and g.user['pic_path'] %}
+ <div class="profile-container">
+  <img class="profile-bg" src="{{ url_for('static', filename='img/pf-bg.jpg') }}">
+   {% if g.user and user['pic_path'] %}
      <img class="img-profile" src="{{ url_for('static', filename='img/profile_pic_uploads/' ~ user['pic_path']) }}" alt="Profile picture">
    {% else %}
      <img class="img-profile" src="{{ url_for('static', filename='img/profile_pic_uploads/avatar.png') }}" alt="profile Avatar">
    {% endif %}
-<a href="{{ url_for('user.profile_update') }}">Update</a>
-<ul>
-    <li>{{ user['full_name'] }}</li>
-    <li>{{ user['username'] }}</li>
-    <li>{{ user['about_user'] }}</li>
-    <li>{{ user['region'] }}</li>
-    <li>{{ g.user['pic_path'] }}</li>
-    <li><a href="{{ user['website_link'] }}" target="_blank">{{ domain }}</a></li>
-    <li>Joined {{ user['register_month'] }}-{{ user['register_year'] }}</li>
-</ul>
+
+       {% if g.user and g.user['id'] == user['id'] %}
+         <a class="update-btn" href="{{ url_for('user.profile_update', user_id=user['id']) }}">Update</a>
+       {% endif %}
+
+   <div class="info">
+     <span class="names">{{ user['full_name'] }}</span>
+     <span class="username">{{ user['username'] }}</span>
+
+       {% if user['about_user'] %}
+     <div class="about">{{ user['about_user'] }}</div>
+       {% else %}
+       <div class="about">
+       {% endif %}
+
+     <span class="others region"><i class="fa fa-globe" aria-hidden="true"></i> {{ user['region'] }}</span>
+
+       {% if user['website_link'] %}
+     <span class="others weblink"><i class="fa fa-link" aria-hidden="true"></i> <a href="{{ user['website_link'] }}" target="_blank">{{ domain }}</a></span>
+       {% endif %}
+     <span class="others joined"><i class="fa fa-calendar" aria-hidden="true"></i> Joined {{ user['register_month'] }} {{ user['register_year'] }}</span>
+
+   </div><hr>
+ </div>
 {% endblock %}

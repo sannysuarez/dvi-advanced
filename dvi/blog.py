@@ -10,7 +10,7 @@ bp = Blueprint('blog', __name__)
 def index():
     db = get_db()
     posts = db.execute(
-        'SELECT p.id, body, created, author_id, full_name, username FROM post p JOIN user u ON p.author_id = '
+        'SELECT p.id, body, created, author_id, pic_path, full_name, username FROM post p JOIN user u ON p.author_id = '
         'u.id ORDER BY created DESC'
     ).fetchall()
     # Convert each row to a dictionary and add humanized time
@@ -53,6 +53,10 @@ def get_post(id, check_author=True):
         abort(403)
 
     return post
+
+def get_user_profile(user_id):
+    db = get_db()
+    user = db.execute('SELECT id, full_name, username, about, region,')
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required

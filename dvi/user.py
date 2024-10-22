@@ -1,5 +1,6 @@
 import os.path
 from crypt import methods
+from subprocess import check_call
 from urllib.parse import urlparse
 
 from flask import (Flask, current_app, Blueprint, g, redirect, render_template, url_for, request, flash)
@@ -11,29 +12,11 @@ from dvi.auth import login_required
 
 bp = Blueprint('user', __name__)
 
-@bp.route('/profile')
+@bp.route('/<user_id>')
 @login_required
-def profile():
-    db = get_db()
+def profile(user_id):
     domain = None
-    user = db.execute(
-        "SELECT pic_path, full_name, username, about_user, region, website_link, register, "
-        "CASE STRFTIME('%m', register)"
-        "WHEN '01' THEN 'Jan' "
-        "WHEN '02' THEN 'Feb' "
-        "WHEN '03' THEN 'Mar' "
-        "WHEN '04' THEN 'Apr' "
-        "WHEN '05' THEN 'May' "
-        "WHEN '06' THEN 'Jun' "
-        "WHEN '07' THEN 'Jul' "
-        "WHEN '08' THEN 'Aug' "
-        "WHEN '09' THEN 'Sep' "
-        "WHEN '10' THEN 'Oct' "
-        "WHEN '11' THEN 'Nov' "
-        "WHEN '12' THEN 'Dec' "
-        "END AS register_month, "
-        "STRFTIME('%Y', register) AS register_year "
-        "FROM user WHERE id = ?", (g.user['id'],)).fetchone()
+    user = get_user_profile(user_id)
 
     # Extract user's domain name
     if user['website_link']:
@@ -41,6 +24,32 @@ def profile():
         domain = parsed_url.netloc
 
     return render_template('user/profile.html', user=user, domain=domain)
+
+
+def get_user_profile(user_id):
+    user = get_db().execute("SELECT id, pic_path, full_name, username, region, about_user, website_link, register, "
+        "CASE STRFTIME('%m', register) "
+        "WHEN '01' THEN 'January' "
+        "WHEN '02' THEN 'February' "
+        "WHEN '03' THEN 'March' "
+        "WHEN '04' THEN 'April' "
+        "WHEN '05' THEN 'May' "
+        "WHEN '06' THEN 'June' "
+        "WHEN '07' THEN 'July' "
+        "WHEN '08' THEN 'August' "
+        "WHEN '09' THEN 'September' "
+        "WHEN '10' THEN 'October' "
+        "WHEN '11' THEN 'November' "
+        "WHEN '12' THEN 'December' "
+        "END AS register_month, "
+        "STRFTIME('%Y', register) AS register_year "
+        "FROM user WHERE id = ?", (user_id,)).fetchone()
+
+    if user is None:
+        abort(404, f"user id {user_id} doesn't exit.")
+
+    return  user
+
 
 @bp.route('/profile_update', methods=['GET', 'POST'])
 @login_required
@@ -81,8 +90,8 @@ def profile_update():
         success = 'Successfully updated profile.'
         flash(success, "success" )
 
-        # Redirect to profile page with updated data
-        return redirect(url_for('user.profile'))
+        # Redirect to profile page with updated picture
+        return redirect(url_for('user.profile', user_id=g.user['id']))
 
     # If GET request, render the update form with existing user data
     return render_template('user/update.html')
@@ -103,10 +112,11 @@ def remove_profile_pic():
         if os.path.exists(file_path):
             os.remove(file_path)
 
+            # Set the profile picture path in the database to None (the default avatar)
+            db.execute('UPDATE user SET pic_path = ? WHERE id = ?', (None, g.user['id'],))
+            db.commit()
+            return redirect(url_for('user.profile', user_id=g.user['id']))
 
-    # Set the profile picture path in the database to None (the default avatar)
-    db.execute('UPDATE user SET pic_path = ? WHERE id = ?', (None, g.user['id'],))
-    db.commit()
     return render_template('user/update.html')
 
 
