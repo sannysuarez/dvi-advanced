@@ -26,10 +26,12 @@
      <span class="others region"><i class="fa fa-globe" aria-hidden="true"></i> {{ user['region'] }}</span>
 
        {% if user['website_link'] %}
-     <span class="others weblink"><i class="fa fa-link" aria-hidden="true"></i> <a href="{{ user['website_link'] }}" target="_blank">{{ domain }}</a></span>
+     <span class="others weblink"><i class="fa fa-link" aria-hidden="true"></i><a href="{{ user['website_link'] }}" target="_blank"> {{ domain }}</a></span>
        {% endif %}
      <span class="others joined"><i class="fa fa-calendar" aria-hidden="true"></i> Joined {{ user['register_month'] }} {{ user['register_year'] }}</span>
 
-   </div><hr>
+      </div><hr>
+   </div>
  </div>
+
 {% endblock %}

@@ -32,21 +32,20 @@
       </ul>
       {% if g.user  %}
             <div class="user-nav-bottom">
+                <a class="img-nav-link" href="#">
                 {% if g.user and g.user['pic_path'] %}
                       <img class="img-nav" src="{{ url_for('static', filename='img/profile_pic_uploads/' ~ g.user['pic_path']) }}" alt="user picture" >
                 {% else %}
                       <img class="img-nav" src="{{ url_for('static', filename='img/profile_pic_uploads/avatar.png') }}" alt="user picture">
                 {% endif %}
+                </a>
 
-                <a href="#">
                     <div class="names">{{ g.user['full_name'] }}</div>
                     <div class="username">{{ g.user['username'] }}</div>
-                </a>
 
                 <div>
                     <a href="{{ url_for('auth.logout') }}">Log out</a>
                 </div>
-
             </div>
       {% else %}
           <div class="nav-bottom">
