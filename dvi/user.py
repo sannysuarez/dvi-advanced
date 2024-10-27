@@ -8,6 +8,7 @@ from werkzeug.exceptions import abort
 from werkzeug.utils import secure_filename
 from dvi.db import get_db
 from dvi.auth import login_required
+from dvi.utils import get_countries
 
 
 bp = Blueprint('user', __name__)
@@ -26,6 +27,7 @@ def profile(user_id):
     return render_template('user/profile.html', user=user, domain=domain)
 
 
+# Get all the user's profile by user-ID
 def get_user_profile(user_id):
     user = get_db().execute("SELECT id, pic_path, full_name, username, region, about_user, website_link, register, "
         "CASE STRFTIME('%m', register) "
@@ -55,10 +57,12 @@ def get_user_profile(user_id):
 @login_required
 def profile_update():
     db = get_db()
+    countries = get_countries()
 
     if request.method == 'POST':
         image = request.files.get('pic_path')
         full_name = request.form['full_name']
+        region = request.form['region']
         about_user = request.form['about_user']
         website_link = request.form['website_link']
 
@@ -68,7 +72,7 @@ def profile_update():
         # Validate image if it exists
         if image:
             filename = secure_filename(image.filename)
-            file_ext = os.path.splitext(filename)[1].lower()
+            file_ext = os.path.splitext(filename)[1].lower() # If file extension is in uppercase, convert to lowercase.
 
             # Ensure the file has a valid extension
             if file_ext not in current_app.config['UPLOAD_EXTENSIONS']:
@@ -76,26 +80,28 @@ def profile_update():
                 flash(error, "error")
                 return  redirect(request.url)
 
-            # Save the image
+            # Save the image to the upload directory.
             image.save(os.path.join(current_app.config['UPLOAD_PATH'], filename))
 
-        # Keep existing pic
+        # Keep existing pic ( The default avatar)
         if not image:
             filename = g.user['pic_path']
 
-        db.execute('UPDATE user SET pic_path = ?, full_name = ?, about_user = ?, website_link = ? WHERE id = ?', (filename, full_name, about_user, website_link, g.user['id'],))
+        db.execute('UPDATE user SET pic_path = ?, full_name = ?, region = ?, about_user = ?, website_link = ? WHERE id = ?', (filename, full_name, region, about_user, website_link, g.user['id'],))
         db.commit()
 
         # Success message
-        success = 'Successfully updated profile.'
+        success = 'Profile update successful.'
         flash(success, "success" )
 
         # Redirect to profile page with updated picture
         return redirect(url_for('user.profile', user_id=g.user['id']))
 
     # If GET request, render the update form with existing user data
-    return render_template('user/update.html')
+    return render_template('user/update.html', countries=countries)
 
+
+# Allow user to remove profile picture.
 @bp.route('/remove_profile_pic', methods=['GET', 'POST'])
 @login_required
 def remove_profile_pic():

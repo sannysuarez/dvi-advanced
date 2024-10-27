@@ -20,8 +20,13 @@
 
    <label>Names:</label><br>
      <input type="text" name="full_name" id="full_name" value="{{ g.user['full_name'] }}" required><br>
-   <label for="username">Username:</label><br>
-     <input type="text" name="username" id="username" value="{{ g.user['username'] }}" readonly required style="background-color: gray;"><br>
+   <label for="region">Region:</label><br>
+     <select id="region" name="region" required>
+         <option >{{ g.user['region'] }}</option>
+         {% for code, country in countries %}
+            <option value="{{ country }}">{{ country }}</option>
+         {% endfor %}
+     </select><br>
    <label>About:</label><br>
      <input type="text" name="about_user" id="about_user" value="{{ request.form['about_user'] or g.user['about_user'] }}" placeholder="Describe yourself in few words."><br>
    <label for="website_link">website url:</label><br>

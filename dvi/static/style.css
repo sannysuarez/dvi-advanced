@@ -300,7 +300,7 @@
    text-align: center;
    }
 
- .update-container input{
+ .update-container input, select{
    width: 50%;
    height: 3rem;
    margin-bottom: 1rem;
