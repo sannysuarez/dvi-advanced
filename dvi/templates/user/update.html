@@ -28,9 +28,10 @@
          {% endfor %}
      </select><br>
    <label>About:</label><br>
-     <input type="text" name="about_user" id="about_user" value="{{ request.form['about_user'] or g.user['about_user'] }}" placeholder="Describe yourself in few words."><br>
+     <input type="text" name="about_user" id="about_user" value="{{ g.user['about_user'] or '' }}" placeholder="Describe yourself in few words."><br>
    <label for="website_link">website url:</label><br>
-     <input type="url" name="website_link" id="website_link" value="{{ g.user['website_link'] }}" placeholder="https://example.com"><br>
+     <input type="url" name="website_link" id="website_link" value="{{ g.user['website_link'] or '' }}" placeholder="https://example.com"><br>
+     <sup>Other sections will soon be available for update, ( Username, password e.t.c )</sup><br><br>
      <input type="submit" value="Save update">
  </form>
  </div>

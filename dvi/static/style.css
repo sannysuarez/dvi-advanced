@@ -232,7 +232,7 @@
  .profile-container .update-btn{
    font-size: 1.5rem;
    font-weight: bolder;
-   padding: 0.5rem;
+   padding: 0.4rem;
    margin-right: 1rem;
    border: 2px solid #000000;
    border-radius: 0.5rem;
@@ -256,7 +256,7 @@
 
  .profile-container .about{
    width: 100%; /* forces a line break for the about section */
-   margin: 15px 0; /* space between line breaks */
+   margin: 5px 0; /* space between line breaks */
    }
 
  .profile-container .info .region, .weblink, .joined{

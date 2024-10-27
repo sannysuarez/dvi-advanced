@@ -10,7 +10,7 @@
    {% endif %}
 
        {% if g.user and g.user['id'] == user['id'] %}
-         <a class="update-btn" href="{{ url_for('user.profile_update', user_id=user['id']) }}">Update</a>
+         <a class="update-btn" href="{{ url_for('user.profile_update', user_id=user['id']) }}">Edit</a>
        {% endif %}
 
    <div class="info">

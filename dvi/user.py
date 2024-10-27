@@ -1,7 +1,10 @@
-import os.path
+import os
 from crypt import methods
 from subprocess import check_call
 from urllib.parse import urlparse
+
+import uuid
+from datetime import datetime
 
 from flask import (Flask, current_app, Blueprint, g, redirect, render_template, url_for, request, flash)
 from werkzeug.exceptions import abort
@@ -67,12 +70,12 @@ def profile_update():
         website_link = request.form['website_link']
 
         # Initialize filename (image) variable
-        filename = None
+        new_filename = None
 
         # Validate image if it exists
         if image:
             filename = secure_filename(image.filename)
-            file_ext = os.path.splitext(filename)[1].lower() # If file extension is in uppercase, convert to lowercase.
+            file_ext = os.path.splitext(filename)[1].lower() # Extract file extension and  convert to lowercase.
 
             # Ensure the file has a valid extension
             if file_ext not in current_app.config['UPLOAD_EXTENSIONS']:
@@ -80,14 +83,17 @@ def profile_update():
                 flash(error, "error")
                 return  redirect(request.url)
 
+            # Generate a unique filename if a file with the same name exists
+            new_filename = os.path.splitext(filename)[0] + uuid.uuid4().hex + file_ext # Generate a unique ID using UUID
+
             # Save the image to the upload directory.
-            image.save(os.path.join(current_app.config['UPLOAD_PATH'], filename))
+            image.save(os.path.join(current_app.config['UPLOAD_PATH'], new_filename))
 
-        # Keep existing pic ( The default avatar)
+        # Keep existing pic ( The default avatar) if no image is uploaded
         if not image:
-            filename = g.user['pic_path']
+            new_filename = g.user['pic_path']
 
-        db.execute('UPDATE user SET pic_path = ?, full_name = ?, region = ?, about_user = ?, website_link = ? WHERE id = ?', (filename, full_name, region, about_user, website_link, g.user['id'],))
+        db.execute('UPDATE user SET pic_path = ?, full_name = ?, region = ?, about_user = ?, website_link = ? WHERE id = ?', (new_filename, full_name, region, about_user, website_link, g.user['id'],))
         db.commit()
 
         # Success message

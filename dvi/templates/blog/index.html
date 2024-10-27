@@ -18,6 +18,7 @@
                     <img src="{{ url_for('static', filename='img/profile_pic_uploads/avatar.png') }}" class="a" alt="user picture">
                  {% endif %}
 
+
                  {% if g.user %}
                     {% if g.user and g.user['id'] == post['author_id'] %}
                         <span class="about"><a href="{{ url_for('user.profile', user_id=g.user.id ) }}">{{ post['full_name'] }} <span class="about-child">- {{ post['username'] }} . {{ post['humanized_time'] }}</span></a></span>
