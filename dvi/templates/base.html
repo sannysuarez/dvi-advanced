@@ -8,6 +8,7 @@
     <title>{% block title %}{% endblock %} | DVI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script> <!-- JavaScript in head -->
+    <script src="{{ url_for('static', filename='js/logout.js') }}"></script>
 
      <!-- Conditionally include login.css for the login page and register.css for the register page. -->
     {% if page_name == 'login' %}
@@ -32,7 +33,7 @@
       </ul>
       {% if g.user  %}
             <div class="user-nav-bottom">
-                <a class="img-nav-link" href="#">
+                <a  href="#"  onclick="showLogoutForm()">
                 {% if g.user and g.user['pic_path'] %}
                       <img class="img-nav" src="{{ url_for('static', filename='img/profile_pic_uploads/' ~ g.user['pic_path']) }}" alt="user picture" >
                 {% else %}
@@ -73,6 +74,15 @@
 
       {% block content%}{% endblock %}
   </section>
+
+ <div id="logoutPopup" class="logoutPopup">
+     <div class="container">
+         <span onclick="hideLogoutForm()" class="close">&times;</span>
+         <a href="#">Log out</a>
+     </div>
+ </div>
+
+
 
 </body>
 

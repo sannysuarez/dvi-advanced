@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<br>&nbsp;<a href="{{ url_for('user.profile', user_id=g.user['id']) }}" class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
  <div class="update-container">
 
       {% if g.user and g.user['pic_path']  %}
           <img class="img-update" src="{{ url_for('static', filename='img/profile_pic_uploads/' ~ g.user['pic_path']) }}" alt="Profile picture">
                 <form method="POST" action="{{ url_for('user.remove_profile_pic') }}" onsubmit="return confirm('Are you sure you want to remove your profile picture?');">
-                     <button type="submit" class="btn btn-danger">Remove Profile Picture</button>
-                </form>
+                     <button type="submit" class="btn btn-danger">Remove Picture</button>
+                </form><br>
              {% else %}
           <img class="img-update" src="{{ url_for('static', filename='img/profile_pic_uploads/avatar.png') }}" alt="profile Avatar">
      {% endif %}
@@ -15,12 +16,16 @@
  <form method="post" enctype="multipart/form-data">
 
      <!-- File input for uploading a new profile picture -->
-    <input type="file" name="pic_path" id="profile_pic" accept=".jpg, .png, .jpeg">
+     <input type="file" name="pic_path" id="profile_pic" class="file-input" accept=".jpg, .png, .jpeg"><br>
 
-
-     <input type="text" name="full_name" id="full_name" value="{{ g.user['full_name'] }}" required>
-     <input type="text" name="about_user" id="about_user" value="{{ request.form['about_user'] or g.user['about_user'] }}">
-     <input type="url" name="website_link" id="website_link" value="{{ g.user['website_link'] }}">
+   <label>Names:</label><br>
+     <input type="text" name="full_name" id="full_name" value="{{ g.user['full_name'] }}" required><br>
+   <label for="username">Username:</label><br>
+     <input type="text" name="username" id="username" value="{{ g.user['username'] }}" readonly required style="background-color: gray;"><br>
+   <label>About:</label><br>
+     <input type="text" name="about_user" id="about_user" value="{{ request.form['about_user'] or g.user['about_user'] }}" placeholder="Describe yourself in few words."><br>
+   <label for="website_link">website url:</label><br>
+     <input type="url" name="website_link" id="website_link" value="{{ g.user['website_link'] }}" placeholder="https://example.com"><br>
      <input type="submit" value="Save update">
  </form>
  </div>
