@@ -21,9 +21,9 @@
 
                  {% if g.user %}
                     {% if g.user and g.user['id'] == post['author_id'] %}
-                        <span class="about"><a href="{{ url_for('user.profile', user_id=g.user.id ) }}">{{ post['full_name'] }} <span class="about-child">- {{ post['username'] }} . {{ post['humanized_time'] }}</span></a></span>
+                        <span class="about"><a href="{{ url_for('user.profile', username=g.user['username'] ) }}">{{ post['full_name'] }} <span class="about-child">- {{ post['username'] }} . {{ post['humanized_time'] }}</span></a></span>
                     {% else %}
-                        <span class="about"><a href="{{ url_for('user.profile', user_id=post['author_id'] ) }}">{{ post['full_name'] }} <span class="about-child">- {{ post['username'] }} . {{ post['humanized_time'] }}</span></a></span>
+                        <span class="about"><a href="{{ url_for('user.profile', username=post['username'] ) }}">{{ post['full_name'] }} <span class="about-child">- {{ post['username'] }} . {{ post['humanized_time'] }}</span></a></span>
                     {% endif %}
                  {% else %}
                         <span class="about"><a href="{{ url_for('auth.login') }}">{{ post['full_name'] }} <span class="about-child">- {{ post['username'] }} . {{ post['humanized_time'] }}</span></a></span>

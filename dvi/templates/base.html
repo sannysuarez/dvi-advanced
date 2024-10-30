@@ -28,7 +28,7 @@
           <li><a href="{{ url_for('blog.index') }}"><i class="fa fa-search" aria-hidden="true"></i> Explore </a></li>
           <li><a href="{{ url_for('blog.index') }}"><i class="fa fa-bell" aria-hidden="true"></i> Notifications </a></li>
           <li><a href="{{ url_for('blog.index') }}"><i class="fa fa-comment" aria-hidden="true"></i> Messages </a></li>
-          <li><a href="{{ url_for('user.profile', user_id=g.user.id ) }}"><i class="fa fa-user" aria-hidden="true"></i> Profile </a></li>
+          <li><a href="{{ url_for('user.profile', username=g.user['username'] ) }}"><i class="fa fa-user" aria-hidden="true"></i> Profile </a></li>
           <li><a href="{{ url_for('blog.index') }}"><i class="fa fa-chevron-circle-down" aria-hidden="true"></i> More </a></li>
       </ul>
       {% if g.user  %}

@@ -16,11 +16,11 @@ from dvi.utils import get_countries
 
 bp = Blueprint('user', __name__)
 
-@bp.route('/<user_id>')
+@bp.route('/<username>')
 @login_required
-def profile(user_id):
+def profile(username):
     domain = None
-    user = get_user_profile(user_id)
+    user = get_user_profile(username)
 
     # Extract user's domain name
     if user['website_link']:
@@ -31,7 +31,7 @@ def profile(user_id):
 
 
 # Get all the user's profile by user-ID
-def get_user_profile(user_id):
+def get_user_profile(username):
     user = get_db().execute("SELECT id, pic_path, full_name, username, region, about_user, website_link, register, "
         "CASE STRFTIME('%m', register) "
         "WHEN '01' THEN 'January' "
@@ -48,10 +48,10 @@ def get_user_profile(user_id):
         "WHEN '12' THEN 'December' "
         "END AS register_month, "
         "STRFTIME('%Y', register) AS register_year "
-        "FROM user WHERE id = ?", (user_id,)).fetchone()
+        "FROM user WHERE username = ?", (username,)).fetchone()
 
     if user is None:
-        abort(404, f"user id {user_id} doesn't exit.")
+        abort(404, f"user id {username} doesn't exit.")
 
     return  user
 
