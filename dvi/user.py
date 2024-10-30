@@ -61,6 +61,7 @@ def get_user_profile(user_id):
 def profile_update():
     db = get_db()
     countries = get_countries()
+    error = None
 
     if request.method == 'POST':
         image = request.files.get('pic_path')
@@ -68,6 +69,15 @@ def profile_update():
         region = request.form['region']
         about_user = request.form['about_user']
         website_link = request.form['website_link']
+
+        if len(about_user) > 60:
+            error = 'The "about" section cannot exceed 60 characters.'
+            flash(error, 'error')
+            return redirect(request.url)
+        elif not full_name:
+            error = 'Names field must not be empty.'
+            flash(error, 'error')
+            return redirect(request.url)
 
         # Initialize filename (image) variable
         new_filename = None

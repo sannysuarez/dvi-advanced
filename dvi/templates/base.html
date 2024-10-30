@@ -8,7 +8,7 @@
     <title>{% block title %}{% endblock %} | DVI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script> <!-- JavaScript in head -->
-    <script src="{{ url_for('static', filename='js/logout.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/Logout.js') }}"></script>
 
      <!-- Conditionally include login.css for the login page and register.css for the register page. -->
     {% if page_name == 'login' %}
@@ -33,7 +33,7 @@
       </ul>
       {% if g.user  %}
             <div class="user-nav-bottom">
-                <a  href="#"  onclick="showLogoutForm()">
+                <a  href="#"  id="popupLink" onclick="openLogoutPopup(event)">
                 {% if g.user and g.user['pic_path'] %}
                       <img class="img-nav" src="{{ url_for('static', filename='img/profile_pic_uploads/' ~ g.user['pic_path']) }}" alt="user picture" >
                 {% else %}
@@ -41,12 +41,12 @@
                 {% endif %}
                 </a>
 
+
                     <div class="names">{{ g.user['full_name'] }}</div>
                     <div class="username">{{ g.user['username'] }}</div>
 
-                <div>
-                    <a href="{{ url_for('auth.logout') }}">Log out</a>
-                </div>
+
+
             </div>
       {% else %}
           <div class="nav-bottom">
@@ -75,15 +75,13 @@
       {% block content%}{% endblock %}
   </section>
 
- <div id="logoutPopup" class="logoutPopup">
-     <div class="container">
-         <span onclick="hideLogoutForm()" class="close">&times;</span>
-         <a href="#">Log out</a>
+ <div id="logoutPopupNav" class="logout-popup-nav" onclick="closePopupOutside(event)">
+     <div class="logout-popup-content">
+         <span class="logout-close-btn" onclick="closeLogoutPopup()">&times;</span><br>
+         <a href="#">Report a problem</a><hr>
+         <a href="{{ url_for('auth.logout') }}" class="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a>
      </div>
  </div>
-
-
-
 </body>
 
 

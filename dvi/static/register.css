@@ -63,10 +63,5 @@
 
  sub{ float: left; }
 
- .flash, .error{
-   color: red;
-   background-color: #f8d7da;
-   padding: 0.1rem;
-   border: 1px solid red;
-   }
+
 
