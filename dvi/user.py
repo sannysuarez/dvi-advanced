@@ -12,6 +12,7 @@ from werkzeug.utils import secure_filename
 from dvi.db import get_db
 from dvi.auth import login_required
 from dvi.utils import get_countries
+import re
 
 
 bp = Blueprint('user', __name__)
@@ -30,7 +31,7 @@ def profile(username):
     return render_template('user/profile.html', user=user, domain=domain)
 
 
-# Get all the user's profile by user-ID
+# Get all the user's profile by user-name
 def get_user_profile(username):
     user = get_db().execute("SELECT id, pic_path, full_name, username, region, about_user, website_link, register, "
         "CASE STRFTIME('%m', register) "
@@ -51,7 +52,7 @@ def get_user_profile(username):
         "FROM user WHERE username = ?", (username,)).fetchone()
 
     if user is None:
-        abort(404, f"user id {username} doesn't exit.")
+        abort(404, f"username {username} doesn't exit.")
 
     return  user
 
@@ -66,9 +67,16 @@ def profile_update():
     if request.method == 'POST':
         image = request.files.get('pic_path')
         full_name = request.form['full_name']
+        username = request.form['username']
         region = request.form['region']
         about_user = request.form['about_user']
         website_link = request.form['website_link']
+
+        # Check if the username contains only allowed characters
+        if not re.match(r'^[\w]+$', username): # Regex for letters, numbers, and underscores only.
+            error = 'Username can only contain letters, numbers, and underscores.'
+            flash(error, 'error')
+            return redirect(request.url)
 
         if len(about_user) > 60:
             error = 'The "about" section cannot exceed 60 characters.'
@@ -78,6 +86,7 @@ def profile_update():
             error = 'Names field must not be empty.'
             flash(error, 'error')
             return redirect(request.url)
+
 
         # Initialize filename (image) variable
         new_filename = None
@@ -103,15 +112,15 @@ def profile_update():
         if not image:
             new_filename = g.user['pic_path']
 
-        db.execute('UPDATE user SET pic_path = ?, full_name = ?, region = ?, about_user = ?, website_link = ? WHERE id = ?', (new_filename, full_name, region, about_user, website_link, g.user['id'],))
+        db.execute('UPDATE user SET pic_path = ?, full_name = ?, username = ?, region = ?, about_user = ?, website_link = ? WHERE id = ?', (new_filename, full_name, username, region, about_user, website_link, g.user['id'],))
         db.commit()
 
         # Success message
         success = 'Profile update successful.'
         flash(success, "success" )
 
-        # Redirect to profile page with updated picture
-        return redirect(url_for('user.profile', user_id=g.user['id']))
+        # Redirect to home page with updated infos
+        return redirect(url_for('blog.index'))
 
     # If GET request, render the update form with existing user data
     return render_template('user/update.html', countries=countries)
@@ -137,7 +146,7 @@ def remove_profile_pic():
             # Set the profile picture path in the database to None (the default avatar)
             db.execute('UPDATE user SET pic_path = ? WHERE id = ?', (None, g.user['id'],))
             db.commit()
-            return redirect(url_for('user.profile', user_id=g.user['id']))
+            return redirect(url_for('user.profile', username=g.user['username']))
 
     return render_template('user/update.html')
 

@@ -2,7 +2,7 @@ import functools
 from flask import (Blueprint, flash, get_flashed_messages, g, redirect, render_template, request, session, url_for )
 from werkzeug.security import check_password_hash, generate_password_hash
 from dvi.db import get_db
-from dvi.utils import get_countries
+from dvi.utils import get_countries, generate_username
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -37,14 +37,21 @@ def register():
         elif not password:
             error = 'Password required!'
 
+
         if error is None:
             try:
                 db.execute("INSERT INTO user "
                            "(full_name, gender, dob, region, email, username, password) VALUES(?, ?, ?, ?, ?, ?, ?)",
                             (full_name, gender, dob, region, email, username, generate_password_hash(password)),)
                 db.commit()
-            except db.IntegrityError:
-                error = f"{email} is already registered."
+            except db.IntegrityError as e:
+                # Check if the IntegrityError is due to a unique constraint on Email or Username
+                if 'email' in str(e):
+                    error = f"{email} is already registered."
+                elif 'username' in str(e):
+                    error = f"The username '{username}' is already taken. try regsitering again to generate another one."
+                else:
+                    error = "A registartion error occured. please try again."
             else:
                 success = 'Registered successfully. you can log in now'
                 flash(success, "success")

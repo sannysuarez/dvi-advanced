@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br>&nbsp;<a href="{{ url_for('user.profile', user_id=g.user['id']) }}" class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+<br>&nbsp;<a href="{{ url_for('user.profile', username=g.user['username']) }}" class="back-btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
  <div class="update-container">
 
       {% if g.user and g.user['pic_path']  %}
@@ -20,6 +20,8 @@
 
    <label>Names:</label><br>
      <input type="text" name="full_name" id="full_name" value="{{ g.user['full_name'] }}" required><br>
+   <label>Username:</label><br>
+     <input type="text" name="username"  value="{{ g.user['username'] }}" required><br>
    <label for="region">Region:</label><br>
      <select id="region" name="region" required>
          <option >{{ g.user['region'] }}</option>
@@ -31,7 +33,6 @@
      <input type="text" name="about_user" id="about_user" maxlength="60" value="{{ g.user['about_user'] or '' }}" placeholder="Describe yourself in few words."><br>
    <label for="website_link">website url:</label><br>
      <input type="url" name="website_link" id="website_link" value="{{ g.user['website_link'] or '' }}" placeholder="https://example.com"><br>
-     <sup>Other sections will soon be available for update, ( Username, password e.t.c )</sup><br><br>
      <input type="submit" value="Save update">
  </form>
  </div>

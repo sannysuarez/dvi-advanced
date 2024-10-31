@@ -224,3 +224,31 @@ def get_countries():
         ("ZW", "Zimbabwe"),
     ]
 
+'''
+This function mimic the username generation logic from the frontend, to further avoid clashes.
+'''
+def generate_username(username):
+    full_name = request.form['full_name']
+    # Split the full name into parts and clean it up
+    name_parts = full_name.strip().split()
+    first_name = name_parts[0] if name_parts else ''
+    last_name = name_parts[-1] if len(name_parts) > 1 else '' # Get the last name if multiple names exist
+
+    # Get the first 3 letters of the first name
+    first_part = first_name[:3].lower() if first_name else ''
+
+    # Get the first 3 or 4 letters of the last name
+    last_part = (last_name[:4].lower() if len(last_name) >= 4 else last_name[:3].lower()) if last_name else ''
+
+    # Generate random 4 digits
+    random_digits = random.randint(1000, 9999)
+
+    # Combine parts to form the username
+    username = first_part + last_part + random_digits  # Concatenate parts
+
+    return username
+
+
+
+
+
